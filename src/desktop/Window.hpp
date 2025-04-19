@@ -282,6 +282,7 @@ class CWindow {
 
     // focus stuff
     bool m_bStayFocused = false;
+    bool m_bFocusOnlyChild = false;
 
     // for toplevel monitor events
     MONITORID m_iLastToplevelMonitorID = -1;

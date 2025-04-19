@@ -5,7 +5,7 @@
 #include "../config/ConfigManager.hpp"
 
 static const auto RULES = std::unordered_set<std::string>{
-    "float", "fullscreen", "maximize", "noinitialfocus", "pin", "stayfocused", "tile", "renderunfocused", "persistentsize",
+    "float", "fullscreen", "maximize", "noinitialfocus", "pin", "stayfocused", "tile", "renderunfocused", "persistentsize", "focusonlychild"
 };
 static const auto RULES_PREFIX = std::unordered_set<std::string>{
     "animation", "bordercolor",   "bordersize", "center",    "content", "fullscreenstate", "group",    "idleinhibit",   "maxsize",     "minsize",
@@ -35,6 +35,8 @@ CWindowRule::CWindowRule(const std::string& rule, const std::string& value, bool
         ruleType = RULE_PIN;
     else if (rule == "stayfocused")
         ruleType = RULE_STAYFOCUSED;
+    else if (rule == "focusonlychild")
+        ruleType = RULE_FOCUSONLYCHILD;
     else if (rule == "tile")
         ruleType = RULE_TILE;
     else if (rule == "renderunfocused")

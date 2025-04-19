@@ -259,6 +259,10 @@ void Events::listener_mapWindow(void* owner, void* data) {
                 PWINDOW->m_bStayFocused = true;
                 break;
             }
+            case CWindowRule::RULE_FOCUSONLYCHILD: {
+                PWINDOW->m_bFocusOnlyChild = true;
+                break;
+            }
             case CWindowRule::RULE_GROUP: {
                 if (PWINDOW->m_eGroupRules & GROUP_OVERRIDE)
                     continue;

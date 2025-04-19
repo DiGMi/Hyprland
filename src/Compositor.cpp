@@ -1082,6 +1082,22 @@ PHLMONITOR CCompositor::getRealMonitorFromOutput(SP<Aquamarine::IOutput> out) {
 
 void CCompositor::focusWindow(PHLWINDOW pWindow, SP<CWLSurfaceResource> pSurface, bool preserveFocusHistory) {
 
+    if (pWindow && pWindow->m_bFocusOnlyChild) {
+        const bool HAS_ONLY_ONE_CHILD = pWindow->m_pXDGSurface && pWindow->m_pXDGSurface->toplevel && (pWindow->m_pXDGSurface->toplevel->children.size() == 1);
+        if (HAS_ONLY_ONE_CHILD) {
+            auto child        = pWindow->m_pXDGSurface->toplevel->children[0];
+            auto child_window = child->window.lock();
+            auto child_owner  = child->owner.lock();
+            if (child_owner) {
+                auto child_surface = child_owner->surface.lock();
+                if (child_window && child_surface) {
+                    Debug::log(LOG, "Window contain only one child, and focusonlychild rule is set, switching focus to the child");
+                    focusWindow(child_window, child_surface, preserveFocusHistory);
+                    return;
+                }
+            }
+        }
+    }
     static auto PFOLLOWMOUSE        = CConfigValue<Hyprlang::INT>("input:follow_mouse");
     static auto PSPECIALFALLTHROUGH = CConfigValue<Hyprlang::INT>("input:special_fallthrough");
 
